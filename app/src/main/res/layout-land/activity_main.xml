@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/holo_blue_dark"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/today_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/na"
+        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:onClick="openSettings"
+        android:src="@drawable/ic_settings"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/today_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/todays_temperature"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_image" />
+
+    <TextView
+        android:id="@+id/today_conditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/today_conditions"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_temp" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/location"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_conditions" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <RelativeLayout
+            android:id="@+id/forecastLayout"
+            android:layout_width="295dp"
+            android:layout_height="343dp">
+
+            <TextView
+                android:id="@+id/forecast_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_0i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/na_small" />
+
+            <TextView
+                android:id="@+id/forecast_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_0"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_1i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_0"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+            <TextView
+                android:id="@+id/forecast_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_1"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_2i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_1"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_2"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_3i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_2"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_3"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_4i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_3"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_4"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_5i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_4"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_5"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_6i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_5"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_6"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_7i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_6"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_7"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_8i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_7"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <TextView
+                android:id="@+id/forecast_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/forecast_8"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/forecast_9i"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/forecast_8"
+                android:paddingRight="10dp"
+                android:src="@drawable/na_small" />
+
+
+            <ImageView
+                android:id="@+id/yahoo_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/forecast_9"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="10dp"
+                android:src="@drawable/yahoo" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

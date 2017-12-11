@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settingsLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.example.adach.adachweather.SettingsActivity">
+
+<Button
+    android:id="@+id/editlocationButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:text="Edit location"
+    android:textColor="#ffffff"
+    style="@style/Widget.AppCompat.Button.Colored"
+    android:theme="@style/Orange.Button"
+    android:onClick="editLocation"/>
+
+    <TextView
+        android:id="@+id/changeTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
+        android:text="Change location:"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/changeTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeTextView1"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:textColor="#808080"
+        android:text="Type new location below"/>
+
+    <EditText
+        android:id="@+id/changerEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeTextView2"
+        android:layout_alignParentLeft="true"
+        android:hint="@string/location_hint"
+        android:textSize="16sp"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/changerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeTextView2"
+        android:layout_alignParentRight="true"
+        android:text="Apply"
+        android:enabled="false"
+        android:textColor="#ffffff"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/Orange.Button"
+        android:onClick="changeLocation"/>
+
+    <TextView
+        android:id="@+id/changeTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
+        android:textColor="#808080"
+        android:layout_below="@+id/changerEditText"
+        android:text="Or tap Find my location to use GPS"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/gpsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeTextView3"
+        android:layout_centerHorizontal="true"
+        android:text="Find my location"
+        android:onClick="getGPSLocation"
+        android:textColor="#ffffff"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/Orange.Button"
+        android:enabled="false"/>
+
+    <TextView
+        android:id="@+id/gpsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gpsButton"
+        android:paddingTop="10dp"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/changerButtonGPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gpsButton"
+        android:layout_alignParentRight="true"
+        android:text="Apply"
+        android:enabled="false"
+        android:textColor="#ffffff"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/Orange.Button"
+        android:onClick="changeLocationGPS"/>
+
+    <ProgressBar
+        android:id="@+id/settingsProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/notificationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications:"
+        android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/changerButtonGPS"
+        android:layout_alignParentLeft="true" />
+
+
+    <TextView
+        android:id="@+id/notificationOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changerButtonGPS"
+        android:layout_alignParentRight="true"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:text="On"
+        android:textSize="20sp"
+        android:onClick="notificationOn"/>
+
+    <TextView
+        android:id="@+id/notification_between"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changerButtonGPS"
+        android:layout_toLeftOf="@+id/notificationOn"
+        android:paddingTop="10dp"
+        android:textSize="20sp"
+        android:text=" | "/>
+
+    <TextView
+        android:id="@+id/notificationOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Off"
+        android:layout_below="@+id/changerButtonGPS"
+        android:layout_toLeftOf="@+id/notification_between"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="20sp"
+        android:onClick="notificationOff"/>
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return"
+        android:layout_alignParentBottom="true"
+        android:textColor="#ffffff"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/Orange.Button"
+        android:onClick="goBack"/>
+
+
+
+
+</RelativeLayout>
