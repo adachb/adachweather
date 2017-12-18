@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.adach.adachweather.data.Channel;
 import com.example.adach.adachweather.data.Condition;
 import com.example.adach.adachweather.data.Item;
+import com.example.adach.adachweather.data.Weather;
 import com.example.adach.adachweather.service.WeatherServiceCallback;
 import com.example.adach.adachweather.service.YahooWeatherService;
 
@@ -72,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
     private Channel notifyChannel;
     private static final String NOTIFICATION_BUTTON ="notification-button-status";
     private boolean notificationStatus;
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private final String API_KEY = "https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"Warsaw,Poland\") and u=\"c\"&format=json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,10 +137,11 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
         preferencesEditor.apply();
     }
 
+
     @Override
-    public void serviceSuccess(Channel channel) {
+    public void serviceSuccess(Weather weather) {
         // pass value to notification
-        notifyChannel = channel;
+        notifyChannel = weather.getQuery().getResults().getChannel();
         dialog.hide();
 
         TextView[] forecastTexts = new TextView[]{forecastTextView0, forecastTextView1,
@@ -146,10 +152,10 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
                 forecastImageView2, forecastImageView3, forecastImageView4, forecastImageView5,
                 forecastImageView6, forecastImageView7, forecastImageView8, forecastImageView9};
 
-        Item item = channel.getItem();
+        Item item = weather.getQuery().getResults().getChannel().getItem();
         int resourceId = getResources().getIdentifier("drawable/icon_"
                 + item.getCondition().getCode(), null, getPackageName());
-        Condition[] forecast = channel.getItem().getForecast();
+        Condition[] forecast = item.getForecast();
 
         @SuppressWarnings("deprecation")
         Drawable weatherIconDrawable = getResources().getDrawable(resourceId);
@@ -157,17 +163,17 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
         weatherIconImageView.setImageDrawable(weatherIconDrawable);
 
         temperatureTextView.setText(item.getCondition().getTemperature() + "\u00B0"
-                + channel.getUnits().getTemperature());
-        conditionTextView.setText(item.getCondition().getDescription());
-        locationTextView.setText(channel.getLocation().getCity() + ", "
-                + channel.getLocation().getRegion());
+                + weather.getQuery().getResults().getChannel().getUnits().getTemperature());
+        conditionTextView.setText(item.getCondition().getText());
+        locationTextView.setText(weather.getQuery().getResults().getChannel().getLocation().getCity() + ", "
+                + weather.getQuery().getResults().getChannel().getLocation().getRegion());
 
         for (int i = 0; i < forecast.length; i++){
             //Condition cond = forecast[i];
             forecastTexts[i].append(forecast[i].getDay() + ", " +  forecast[i].getDate() + "\n"
-            + forecast[i].getDescription() + ": " + forecast[i].getHigh() + "\u00B0" +
-                    channel.getUnits().getTemperature() + " (" + forecast[i].getLow()  + "\u00B0"
-                    + channel.getUnits().getTemperature() + ")" + "\n");
+            + forecast[i].getText() + ": " + forecast[i].getHigh() + "\u00B0" +
+                    weather.getQuery().getResults().getChannel().getUnits().getTemperature() + " (" + forecast[i].getLow()  + "\u00B0"
+                    + weather.getQuery().getResults().getChannel().getUnits().getTemperature() + ")" + "\n");
 
             int forecastResourceId = getResources().getIdentifier("drawable/icon_" +
                     forecast[i].getCode() + "_small", null, getPackageName());
@@ -200,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
         startActivity(intent);
     }
 
+
     public void sendNotification(){
         // get weather data from channel
         Item item = notifyChannel.getItem();
@@ -230,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements WeatherServiceCal
                 .setContentTitle(notifyChannel.getLocation().getCity())
                 .setContentText(item.getCondition().getTemperature() + "\u00B0"
                         + notifyChannel.getUnits().getTemperature() + " - "
-                        + item.getCondition().getDescription())
+                        + item.getCondition().getText())
                 .setSmallIcon(notifyTempResourceId)
                 .setLargeIcon(icon2)
                 .setContentIntent(contentIntent)

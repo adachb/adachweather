@@ -1,15 +1,13 @@
 package com.example.adach.adachweather.data;
 
-import org.json.JSONObject;
-
 /**
  * Created by Adach on 2017-12-01.
  */
 
-public class Condition implements JSONPopulator{
+public class Condition{
     private int code;
     private int temperature;
-    private String description;
+    private String text;
     private String date;
     private String day;
     private int high;
@@ -24,8 +22,8 @@ public class Condition implements JSONPopulator{
         return temperature;
     }
 
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 
     public String getDate() {
@@ -44,15 +42,4 @@ public class Condition implements JSONPopulator{
         return low;
     }
 
-    @Override
-    public void populate(JSONObject data) {
-        code = data.optInt("code");
-        temperature = data.optInt("temp");
-        description = data.optString("text");
-        date = data.optString("date");
-        day = data.optString("day");
-        high = data.optInt("high");
-        low = data.optInt("low");
-
-    }
 }

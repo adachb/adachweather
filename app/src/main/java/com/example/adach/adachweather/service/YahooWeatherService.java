@@ -1,17 +1,20 @@
 package com.example.adach.adachweather.service;
 
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.util.Log;
 
-import com.example.adach.adachweather.data.Channel;
+import com.example.adach.adachweather.MainActivity;
+import com.example.adach.adachweather.data.Weather;
+import com.google.android.gms.common.api.Api;
 
-import org.json.JSONObject;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by Adach on 2017-12-01.
@@ -21,6 +24,7 @@ public class YahooWeatherService {
     private WeatherServiceCallback callback;
     private String location;
     private Exception error;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     public YahooWeatherService(WeatherServiceCallback callback) {
         this.callback = callback;
@@ -31,65 +35,46 @@ public class YahooWeatherService {
     }
 
     public void refreshWeather(final String location) {
-        this.location = location;
-        new AsyncTask<String, Void, Channel>() {
+        String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\") and u=\"c\"", location);
 
-            @Override
-            protected Channel doInBackground(String... strings) {
+        RxJava2CallAdapterFactory rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
 
-                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\") and u=\"c\"", location);
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(rxAdapter)
+                .baseUrl("https://query.yahooapis.com/v1/public/")
+                .build();
 
-                String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
+        ApiClient api = retrofit.create(ApiClient.class);
+        //api.getWeather(String.format("yql?q=%s&format=json", YQL));
 
-                Channel channel = new Channel();
+        final Observable<Weather> call = api.getWeather(String.format("yql?q=%s&format=json", YQL));
+        Disposable disposable = call
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Weather>(){
+                    @Override
+                    public void onNext(Weather value) {
 
-                try {
-                    URL url = new URL(endpoint);
-
-                    URLConnection connection = url.openConnection();
-
-                    InputStream inputStream = connection.getInputStream();
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null){
-                        result.append(line);
                     }
 
-                    reader.close();
+                    @Override
+                    public void onError(Throwable e) {
 
-                    JSONObject data = new JSONObject(result.toString());
-
-                    JSONObject queryResult = data.optJSONObject("query");
-                    int count = queryResult.optInt("count");
-
-                    if (count == 0) {
-                        error = new LocationWeatherException("No weather information found for " + location);
-                        return null;
                     }
 
-                    JSONObject channelJSON = queryResult.optJSONObject("results").optJSONObject("channel");
-                    channel.populate(channelJSON);
-                    return channel;
-                } catch (Exception e) {
-                    error = e;
-                }
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete");
+                        Weather a = call.lastElement().blockingGet();
+                        if (a == null && error != null) {
+                            callback.serviceFailure(error);
+                        } else {
+                            callback.serviceSuccess(a);
+                        }
+                    }
+                });
 
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Channel channel) {
-
-                if (channel == null && error != null) {
-                    callback.serviceFailure(error);
-                } else {
-                    callback.serviceSuccess(channel);
-                }
-            }
-        }.execute(location);
     }
 
     public class LocationWeatherException extends Exception {
